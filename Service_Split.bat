@@ -1,6 +1,7 @@
 @echo off
 
-:: Optimize svchost.exe process count and free up system resources
+::
+:: Optimize svchost.exe process count
 :: Run as Administrator and reboot for changes to take effect.
 :: If RAM is added/removed, rerun the script.
 ::
@@ -28,19 +29,6 @@ if %errorlevel% neq 0 (
     exit /b 1
 )
 
-:: Additional cleanup and optimization
-:: Stop unnecessary services to free up memory
-sc config SysMain start= disabled >nul 2>&1
-sc config DiagTrack start= disabled >nul 2>&1
-sc config WSearch start= disabled >nul 2>&1
-sc config TabletInputService start= disabled >nul 2>&1
-sc config wlidsvc start= disabled >nul 2>&1
-
-:: Kill unneeded processes
-for %%i in (OneDrive.exe SearchIndexer.exe RuntimeBroker.exe YourPhone.exe) do (
-    taskkill /F /IM %%i >nul 2>&1
-)
-
-echo System optimization completed! Reboot for changes to take effect.
+echo SVCHost Split Threshold updated successfully! Reboot for changes to take effect.
 pause
 exit /b 0
